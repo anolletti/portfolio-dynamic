@@ -18,8 +18,9 @@ app.config['RECAPTCHA_PRIVATE_KEY']= os.environ['RECAPTCHA_PRIVATE_KEY']
 RECAPTCHA_PUBLIC_KEY= os.environ['RECAPTCHA_PUBLIC_KEY']
 RECAPTCHA_PRIVATE_KEY= os.environ['RECAPTCHA_PRIVATE_KEY']
 
-def submit(form):
-   
+@app.route('/', methods=('GET', 'POST'))
+def index():
+    form = CourseForm()
 
     if request.method == 'POST':
         secret_response = request.form['g-recaptcha-response']
@@ -44,23 +45,13 @@ def submit(form):
         )
 
         return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
-
-@app.route('/', methods=('GET', 'POST'))
-def index():
-    form = CourseForm()
-    submit(form)
+    
     return render_template('index.html', form=form)
 
 
 @app.route('/success')
 def success():
     return render_template('success.html')
-
-
-@app.route('/invalid')
-def success():
-    form = CourseForm()
-    submit(form)
 
 
 if __name__ == '__main__':
