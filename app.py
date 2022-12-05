@@ -28,7 +28,8 @@ def index():
         verify_response = requests.post(url=f'{VERIFY_URL}?secret={RECAPTCHA_PRIVATE_KEY}&response={secret_response}').json()
 
         if verify_response['success'] == False:
-            abort(401)
+            return render_template('index.html', scroll="recaptchaError", form=form)
+
 
         sender_name = form.name.data
         sender_email = form.email.data
