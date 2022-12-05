@@ -457,25 +457,18 @@
                 />
               </div>
               <!-- recaptcha field -->
+
+              <div class="mb-3">{{ form.recaptcha }}</div>
               <div id="recaptchaError">
                 {% if scroll %}
 
                 <script>
                   document.getElementById("{{ scroll }}").scrollIntoView();
                 </script>
-              </div>
 
-              <div class="mb-3">
-                <!--REcaptcha-->
-
-                {{ form.recaptcha.label(class="form-control-label") }} {% if
-                form.recaptcha.errors %} {{ form.recaptcha()}}
-                <div class="invalid-feedback">
-                  {% for error in form.recaptcha.errors %}
-                  <span>{{ error }}</span>
-                  {% endfor %}
-                </div>
-                {% else %} {{ form.recaptcha()}} {% endif %}
+                {% for error in form.recaptcha.errors %}
+                <span>{{ error }}</span>
+                {% endfor %} {% endif %}
               </div>
             </form>
           </div>
