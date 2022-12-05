@@ -457,7 +457,13 @@
                 />
               </div>
               <!-- recaptcha field -->
-              <div class="mb-3">{{ form.recaptcha }}</div>
+              <div class="mb-3">
+                {{ form.recaptcha }} {% for error in form.recaptcha.errors %}
+                <ul>
+                  <li>{{ error }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
             </form>
           </div>
         </div>
