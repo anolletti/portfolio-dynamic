@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 from forms import CourseForm
 import smtplib, os
-from flask_recaptcha import ReCaptcha
-
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
@@ -12,12 +10,10 @@ MY_PASSWORD = os.environ['MY_PASSWORD']
 app.config['RECAPTCHA_PUBLIC_KEY']= os.environ['RECAPTCHA_PUBLIC_KEY']
 app.config['RECAPTCHA_PRIVATE_KEY']= os.environ['RECAPTCHA_PRIVATE_KEY']
 
-ReCaptcha = ReCaptcha()
-
 @app.route('/', methods=('GET', 'POST'))
 def index():
     form = CourseForm()
-    if form.validate_on_submit() and ReCaptcha.verify():
+    if form.validate_on_submit():
         sender_name = form.name.data
         sender_email = form.email.data
         message = form.message.data
@@ -32,11 +28,6 @@ def index():
         )
 
         return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
-    
-    elif not ReCaptcha.verify():
-
-        return render_template("index.html", form=form, scroll="recaptchaError")
-
    
     return render_template('index.html', form=form)
 

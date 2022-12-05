@@ -386,7 +386,6 @@
     </section>
     <!-- Contact Section-->
     <section class="page-section" id="contact">
-      {% if scroll %} {% endif %}
       <div class="container">
         <!-- Contact Section Heading-->
         <h2
@@ -410,7 +409,7 @@
       <div class="container">
         <div class="row d-flex justify-content-center">
           <div class="col-xs-12 col-md-6">
-            <form method="POST" action="/" id="form">
+            <form method="POST" action="/">
               {{ form.csrf_token }}
               <!-- Name Field -->
               <div class="mb-3">
@@ -455,23 +454,10 @@
                   type="submit"
                   value="Send"
                   class="btn btn-secondary mt-3"
-                  id="submit"
                 />
               </div>
               <!-- recaptcha field -->
-              {% if scroll %}
-              <script>
-                document.getElementById("{{ scroll }}").scrollIntoView();
-              </script>
-              {% endif %}
               <div class="mb-3">{{ form.recaptcha }}</div>
-              <div class="mb-3" style="color: red" id="recaptchaError">
-                {% for error in form.recaptcha.errors %}
-                <ul>
-                  <li>{{ error }}</li>
-                  {% endfor %}
-                </ul>
-              </div>
             </form>
           </div>
         </div>
