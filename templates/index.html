@@ -386,11 +386,7 @@
     </section>
     <!-- Contact Section-->
     <section class="page-section" id="contact">
-      {% if scroll %}
-      <script>
-        document.getElementById("{{ scroll }}").scrollIntoView();
-      </script>
-      {% endif %}
+      {% if scroll %} {% endif %}
       <div class="container">
         <!-- Contact Section Heading-->
         <h2
@@ -462,8 +458,11 @@
                 />
               </div>
               <!-- recaptcha field -->
+              <script>
+                document.getElementById("{{ scroll }}").scrollIntoView();
+              </script>
               <div class="mb-3">{{ form.recaptcha }}</div>
-              <div class="mb-3" style="color: red">
+              <div class="mb-3" style="color: red" id="recaptchaError">
                 {% for error in form.recaptcha.errors %}
                 <ul>
                   <li>{{ error }}</li>

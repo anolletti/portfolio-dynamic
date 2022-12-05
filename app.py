@@ -30,7 +30,7 @@ def index():
         return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
     
     if not form.validate_on_submit():
-        return render_template("index.html", form=form, scroll="contact")
+        return render_template("index.html", form=form, scroll="recaptchaError")
 
    
     return render_template('index.html', form=form)
