@@ -22,7 +22,7 @@ RECAPTCHA_PRIVATE_KEY= os.environ['RECAPTCHA_PRIVATE_KEY']
 def index():
     form = CourseForm()
 
-    if request.method == 'post':
+    if request.method == 'POST':
         secret_response = request.form['g-recaptcha-response']
 
         verify_response = requests.post(url=f'{VERIFY_URL}?secret={RECAPTCHA_PRIVATE_KEY}&response={secret_response}').json()
