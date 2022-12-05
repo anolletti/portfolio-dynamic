@@ -27,24 +27,23 @@ def index():
 
         verify_response = requests.post(url=f'{VERIFY_URL}?secret={RECAPTCHA_PRIVATE_KEY}&response={secret_response}').json()
 
-        if verify_response['success'] == False or verify_response['score'] < 0.5:
+        if verify_response['success'] == False:
             abort(401)
 
-        elif verify_response['success'] == True or verify_response['score'] > 0.5:
-            sender_name = form.name.data
-            sender_email = form.email.data
-            message = form.message.data
+        sender_name = form.name.data
+        sender_email = form.email.data
+        message = form.message.data
 
-            with smtplib.SMTP('smtp.gmail.com', 587) as connection:
-                connection.starttls()
-                connection.login(MY_EMAIL, MY_PASSWORD)
-                connection.sendmail(
-                    from_addr=MY_EMAIL,
-                    to_addrs=[MY_EMAIL, sender_email],
-                    msg=f"Subject:{sender_name}'s Inquiry\n\nHello {sender_name}, \n\nBelow is the inquiry you submitted on my site:\n\n*****************************\n\n{message}\n\n*****************************\n\nI will get back to you shortly! \n\nSincerely,\n\nAnthony"
-            )
+        with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+            connection.starttls()
+            connection.login(MY_EMAIL, MY_PASSWORD)
+            connection.sendmail(
+                from_addr=MY_EMAIL,
+                to_addrs=[MY_EMAIL, sender_email],
+                 msg=f"Subject:{sender_name}'s Inquiry\n\nHello {sender_name}, \n\nBelow is the inquiry you submitted on my site:\n\n*****************************\n\n{message}\n\n*****************************\n\nI will get back to you shortly! \n\nSincerely,\n\nAnthony"
+        )
 
-            return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
+        return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
     
     return render_template('index.html', form=form)
 
