@@ -457,15 +457,20 @@
                 />
               </div>
               <!-- recaptcha field -->
+              {% if scroll %}
+
               <script>
                 document.getElementById("{{ scroll }}").scrollIntoView();
               </script>
-              <div class="mb-3">{{ form.recaptcha }}</div>
               <div id="recaptchaError" class="alert alert-danger" role="alert">
-                {% if scroll %} {% for error in form.recaptcha.errors %}
+                {% for error in form.recaptcha.errors %}
                 <span>{{ error }}</span>
-                {% endfor %} {% endif %}
+                {% endfor %}
               </div>
+
+              {% endif %}
+
+              <div class="mb-3">{{ form.recaptcha }}</div>
             </form>
           </div>
         </div>
