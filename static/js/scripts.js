@@ -1,4 +1,4 @@
-jquery("form").on("submit", function (e) {
+jquery("submit").on("submit", function (e) {
   if (grecaptcha.getResponse() === "") {
     e.preventDefault();
     alert("Error: \n please validate the Captcha test");
