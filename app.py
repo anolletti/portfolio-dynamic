@@ -1,8 +1,7 @@
-from flask import Flask, render_template, request, abort
+from flask import Flask, render_template
 from forms import CourseForm
 import smtplib, os
 from flask_recaptcha import ReCaptcha
-import requests
 
 
 app = Flask(__name__)
@@ -10,25 +9,15 @@ app.config['SECRET_KEY'] = 'your secret key'
 
 MY_EMAIL = "anthonynolletti@gmail.com"
 MY_PASSWORD = os.environ['MY_PASSWORD']
-VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
-SECRET_KEY = os.environ['RECAPTCHA_PRIVATE_KEY']
 app.config['RECAPTCHA_PUBLIC_KEY']= os.environ['RECAPTCHA_PUBLIC_KEY']
 app.config['RECAPTCHA_PRIVATE_KEY']= os.environ['RECAPTCHA_PRIVATE_KEY']
+
+ReCaptcha = ReCaptcha()
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
     form = CourseForm()
-    
-
-    if form.validate_on_submit():
-        secret_response = request.form['g-recaptcha-response']
-        verify_response = requests.post(url=f'{VERIFY_URL}?secret={SECRET_KEY}&response={secret_response}').json
-        print(verify_response)
-        
-        if verify_response['success'] == False or verify_response['score'] < 0.5:
-            print("This happened")
-            abort(401)
-
+    if form.validate_on_submit() and ReCaptcha.verify():
         sender_name = form.name.data
         sender_email = form.email.data
         message = form.message.data
@@ -44,9 +33,9 @@ def index():
 
         return render_template("success.html", sender_name=sender_name, sender_email=sender_email, message=message)
     
+    elif not ReCaptcha.verify():
 
-    # elif not ReCaptcha.verify():
-    #     return render_template("index.html", form=form, scroll="recaptchaError")
+        return render_template("index.html", form=form, scroll="recaptchaError")
 
    
     return render_template('index.html', form=form)
