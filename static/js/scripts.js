@@ -1,10 +1,3 @@
-jquery("submit").on("submit", function (e) {
-  if (grecaptcha.getResponse() === "") {
-    e.preventDefault();
-    alert("Error: \n please validate the Captcha test");
-  }
-});
-
 window.addEventListener("DOMContentLoaded", (event) => {
   // Navbar shrink function
   var navbarShrink = function () {
