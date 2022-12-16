@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/0b309fd7-b16c-4ec0-92cd-efdd4247258a/AppServices/subscriptions/0b309fd7-b16c-4ec0-92cd-efdd4247258a/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/portfolio-dynamic",
+  "appService.deploySubpath": "."
+}

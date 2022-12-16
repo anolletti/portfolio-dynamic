@@ -1,22 +1,22 @@
-from flask import Flask, render_template, redirect, url_for, request, abort
+from flask import Flask, render_template, request
 from forms import CourseForm
-import smtplib, os
-import requests
+import smtplib
+import requests, os
+from dotenv import load_dotenv
 
-
+load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'your secret key'
 
-MY_EMAIL = "anthonynolletti@gmail.com"
-MY_PASSWORD = os.environ['MY_PASSWORD']
+MY_PASSWORD=os.environ['MY_PASSWORD']
+MY_EMAIL=os.environ['MY_EMAIL']
+RECAPTCHA_PRIVATE_KEY=os.environ['RECAPTCHA_PRIVATE_KEY']
+RECAPTCHA_PUBLIC_KEY=os.environ['RECAPTCHA_PUBLIC_KEY']
 VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
 
-app.config['RECAPTCHA_PUBLIC_KEY']= os.environ['RECAPTCHA_PUBLIC_KEY']
-app.config['RECAPTCHA_PRIVATE_KEY']= os.environ['RECAPTCHA_PRIVATE_KEY']
-
-RECAPTCHA_PUBLIC_KEY= os.environ['RECAPTCHA_PUBLIC_KEY']
-RECAPTCHA_PRIVATE_KEY= os.environ['RECAPTCHA_PRIVATE_KEY']
+app.config['RECAPTCHA_PUBLIC_KEY']= "6LdkKUkjAAAAAHxnX8MZmkY4Knew-bAqG6jGVhdG"
+app.config['RECAPTCHA_PRIVATE_KEY']= "6LdkKUkjAAAAAFp6ERlULQnaiYcM0rIdZsTOws2I"
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
